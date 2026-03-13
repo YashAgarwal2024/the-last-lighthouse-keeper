@@ -5,6 +5,9 @@ An immersive **interactive storytelling website** that blends narrative writing,
 The project presents a short story titled **"The Last Lighthouse Keeper"**, where animations, illustrations, and scrolling effects bring each chapter to life.
 
 ---
+## 🌐 Live Website
+
+👉 https://gsap-interactive-story.vercel.app/story1.html
 
 ## ✨ Features
 
