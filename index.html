@@ -787,6 +787,9 @@
 <!-- Audio Toggle -->
 <button id="audio-btn" aria-label="Toggle ambient audio">♪ AMBIENT</button>
 
+<!-- Ambient Sound MP3 -->
+<audio id="ambientAudio" src="ambient.mp3" loop preload="auto" volume="0.1"></audio>
+
 <!-- ================================================================
      HERO SECTION
 ================================================================ -->
@@ -2186,53 +2189,19 @@ dots.forEach((dot, i) => {
 });
 
 // ============================================================
-// AMBIENT AUDIO — layered Web Audio synth ocean
+// AMBIENT AUDIO — using ambient.mp3
 // ============================================================
-let audioCtx = null, gainNode = null, playing = false;
 const audioBtn = document.getElementById('audio-btn');
-
-function createAmbient() {
-  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  gainNode = audioCtx.createGain();
-  gainNode.gain.value = 0;
-  gainNode.connect(audioCtx.destination);
-
-  // Layered drones
-  const config = [
-    { freq: 55, type: 'sine', gain: 0.035, lfoFreq: 0.04, lfoDepth: 1.8 },
-    { freq: 82, type: 'sine', gain: 0.025, lfoFreq: 0.07, lfoDepth: 2.5 },
-    { freq: 110, type: 'triangle', gain: 0.018, lfoFreq: 0.03, lfoDepth: 3 },
-    { freq: 138, type: 'sine', gain: 0.012, lfoFreq: 0.06, lfoDepth: 4 },
-    { freq: 165, type: 'sine', gain: 0.008, lfoFreq: 0.05, lfoDepth: 2 },
-    { freq: 220, type: 'triangle', gain: 0.005, lfoFreq: 0.09, lfoDepth: 3 },
-  ];
-  config.forEach(c => {
-    const osc = audioCtx.createOscillator();
-    const og = audioCtx.createGain();
-    osc.type = c.type;
-    osc.frequency.value = c.freq;
-    og.gain.value = c.gain;
-    osc.connect(og); og.connect(gainNode);
-    osc.start();
-
-    const lfo = audioCtx.createOscillator();
-    const lg = audioCtx.createGain();
-    lfo.frequency.value = c.lfoFreq;
-    lg.gain.value = c.lfoDepth;
-    lfo.connect(lg); lg.connect(osc.frequency);
-    lfo.start();
-  });
-}
+const ambientAudio = document.getElementById('ambientAudio');
+let playing = false;
 
 audioBtn.addEventListener('click', () => {
-  if (!audioCtx) createAmbient();
   if (playing) {
-    gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1.8);
+    ambientAudio.pause();
     playing = false;
     audioBtn.textContent = '♪ AMBIENT';
   } else {
-    audioCtx.resume();
-    gainNode.gain.linearRampToValueAtTime(0.45, audioCtx.currentTime + 2);
+    ambientAudio.play();
     playing = true;
     audioBtn.textContent = '⏸ AMBIENT';
   }
