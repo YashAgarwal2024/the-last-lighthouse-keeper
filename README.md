@@ -7,7 +7,7 @@ The project presents a short story titled **"The Last Lighthouse Keeper"**, wher
 ---
 ## 🌐 Live Website
 
-👉 https://gsap-interactive-story.vercel.app/story1.html
+👉 https://vercel.com/yashagarwal2024s-projects/the-last-lighthouse-keeper
 
 ## ✨ Features
 
